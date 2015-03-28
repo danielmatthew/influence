@@ -1,6 +1,5 @@
 $(document).ready(function(){
   
-  // Write your Javascript!
   var enlarged = $('#enlarged'),
       title = $('#enlarged .principle'),
       quote = $('#enlarged .quote'),
@@ -8,19 +7,43 @@ $(document).ready(function(){
       principle1 = $('#principle-1'),
       text;
 
-  // Bind cursor keys, WASD, and swipe events to
-  // enable navigation through chapters and principles
+  var splashScreen = $('#splash');
+  
+  var counter = 0;
+  var chaptersArray = document.querySelectorAll('.chapter');
+  
+  var sectionCounter = 0;
+  var sectionsArray = [
+    document.querySelectorAll('#fundamentals article'),
+    document.querySelectorAll('#make-people-like-you article'),
+    document.querySelectorAll('#how-to-win-people article'),
+    document.querySelectorAll('#be-a-leader article')
+  ];
 
-    var splashScreen = $('#splash');
+  // Get all chapters in fundamentals section
+  var fundamentals = $('#fundamentals article');
 
 
-  function hideSplashScreen() {
-    var splashScreen = document.getElementById('splash');
-    splashScreen.classList.add('fadeOut');
+  // Draws data in appropriate places
+  function updateText(section, chapter) {
+    title.text($(section[chapter]).data('lesson'));
+    quote.text($(section[chapter]).data('quote'));
   }
 
-  var counter = 0;
-  console.log('Counter is: ' + counter);
+  function navigateUp() {
+    sectionCounter--;
+    updateText(sectionsArray[sectionCounter], counter);
+  }
+  
+  function navigateDown() {
+    if (sectionCounter < chaptersArray.length - 1) {
+      sectionCounter++;
+      console.log(sectionCounter);
+      updateText(sectionsArray[sectionCounter], counter);
+    } else {
+      console.log('No more chapters');
+    }
+  }
 
   function navigateRight() {
 
@@ -29,6 +52,7 @@ $(document).ready(function(){
       console.log('Counter is ' + counter);
     } else {
       console.log('end of array');
+      // Tell user they are at the end
     }
 
     return counter;
@@ -40,18 +64,14 @@ $(document).ready(function(){
     } else {
       console.log('start of array');
       // Maybe wrap round? 
+      // Tell user they are at the start
     }
   }
 
-  function updateText(chapter) {
-    title.text($(fundamentals[chapter]).data('lesson'));
-    quote.text($(fundamentals[chapter]).data('quote'));
+  function hideSplashScreen() {
+    var splashScreen = document.getElementById('splash');
+    splashScreen.classList.add('fadeOut');
   }
-
-  // Get all chapters in fundamentals section
-  var fundamentals = $('#fundamentals article');
-  console.log('Fundamentals length is ' + fundamentals.length);
-
 
 
   $(document).keydown(function(e) {
@@ -61,12 +81,13 @@ $(document).ready(function(){
         break;
       case 37: //left
         navigateLeft();
-        // counter--;
-        updateText(counter);
+        updateText(sectionsArray[sectionCounter], counter);
         console.log('Pressed left arrow'); 
         break;
 
-      case 38: // up
+      case 38: // 
+
+        navigateUp();
         console.log('Pressed up arrow');
         break;
 
@@ -75,12 +96,14 @@ $(document).ready(function(){
         navigateRight();
         // counter++;
         // navigateRight(counter);
-        updateText(counter);
+        updateText(sectionsArray[sectionCounter], counter);
         console.log(counter);
         console.log('Pressed right arrow');
         break;
 
       case 40: // down
+        navigateDown();
+        // updateText(chapterCounter, counter);
         console.log('Pressed down arrow');
         break;
 
@@ -89,11 +112,6 @@ $(document).ready(function(){
     }
     e.preventDefault();
   });
-
-
-  updateText(counter);
-
-
 
   articles.on('click', function(){
     title.text($(this).data('lesson'));
@@ -104,5 +122,7 @@ $(document).ready(function(){
       height: '300px'
     }, 500);
   })
+
+  updateText(sectionsArray[sectionCounter], counter);
 
 });

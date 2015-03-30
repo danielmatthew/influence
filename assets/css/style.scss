@@ -70,7 +70,33 @@ header {
 }
 
 #menu {
-  overflow: hidden;
+  
+}
+
+.scaled-down {
+
+  position: relative;
+  z-index: 700;
+  width: 40%;
+  margin: auto;
+  top: 60%;
+
+  h1 {
+    display: none;
+  }
+
+  article {
+    flex: 0 0 1vh;
+    height: 1vh;
+    margin: 1vh;
+    font-size: 1vh;
+    color: transparent;
+
+    h1 {
+      display: none;
+    }
+
+  }
 }
 
 // #container {
@@ -133,12 +159,16 @@ header {
   }
 }
 
+.selected {
+  background-color: red;
+}
+
 article {
   flex: 0 0 10vw;
   vertical-align: middle;
 
   text-align: center;
-  font-size: 16px;
+  font-size: 1em;
   // height: 30vh;
   height: 10vw;
   margin: 1em;

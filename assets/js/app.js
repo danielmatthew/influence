@@ -26,6 +26,8 @@ $(document).ready(function(){
 
   // Draws data in appropriate places
   function updateText(section, chapter) {
+    $(articles).removeClass('selected');
+    $(section[chapter]).addClass('selected');
     title.text($(section[chapter]).data('lesson'));
     quote.text($(section[chapter]).data('quote'));
   }
@@ -37,6 +39,7 @@ $(document).ready(function(){
   
   function navigateDown() {
     if (sectionCounter < chaptersArray.length - 1) {
+
       sectionCounter++;
       console.log(sectionCounter);
       updateText(sectionsArray[sectionCounter], counter);
@@ -47,7 +50,7 @@ $(document).ready(function(){
 
   function navigateRight() {
 
-    if (counter < fundamentals.length - 1) {
+    if (counter < sectionsArray[sectionCounter].length - 1) {
       counter++;
       console.log('Counter is ' + counter);
     } else {
@@ -79,13 +82,13 @@ $(document).ready(function(){
       case 32: // Spacebar - hide menu screen
         hideSplashScreen();
         break;
-      case 37: //left
+      case 37: // left
         navigateLeft();
         updateText(sectionsArray[sectionCounter], counter);
         console.log('Pressed left arrow'); 
         break;
 
-      case 38: // 
+      case 38: // up
 
         navigateUp();
         console.log('Pressed up arrow');

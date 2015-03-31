@@ -117,8 +117,14 @@ $(document).ready(function(){
   });
 
   articles.on('click', function(){
+
     title.text($(this).data('lesson'));
     quote.text($(this).data('quote'));
+
+    $(articles).removeClass('selected');
+    $(this).addClass('selected');
+
+    // Also need to reset array counters...
 
     enlarged.addClass('fadeIn');
     enlarged.animate({
